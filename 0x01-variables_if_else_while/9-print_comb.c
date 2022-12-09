@@ -14,7 +14,7 @@ int main(void)
 		putchar((com % 10) + '0');
 
 		if (com == 9)
-			continiue;
+			continue;
 		putchar(',');
 		putchar(' ');
 	}
