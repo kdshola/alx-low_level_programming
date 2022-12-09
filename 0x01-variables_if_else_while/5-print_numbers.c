@@ -13,7 +13,7 @@ int main(void)
 	{
 		printf("%d", dec);
 	}
-	primtf('\n');
+	printf('\n');
 
 	return (0);
 }
