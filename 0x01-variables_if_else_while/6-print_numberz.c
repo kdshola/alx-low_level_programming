@@ -1,18 +1,18 @@
 #include <stdio.h>
 
 /**
- * main - entry point
- * prints 1 to 9
+ * main - Entry point
+ * prints 0 to 9
  * Return: 0 Always
  */
 int main(void)
 {
-	int dig = 0;
+	int i = 48;
 
-	while (dig < 10)
+	while (i < 58)
 	{
-		printf("%d", dig);
-		dig++;
+		putchar(i);
+		i++;
 	}
 	putchar('\n');
 	return (0);
