@@ -5,7 +5,7 @@
  * Prints alphabet in lower case followed by a new line
  * Return: 0 Always
  */
-void main(void)
+int main(void)
 {
 	char ch = 'a';
 
@@ -15,4 +15,5 @@ void main(void)
 		ch++;
 	}
 	putchar('\n');
+	return (0);
 }
