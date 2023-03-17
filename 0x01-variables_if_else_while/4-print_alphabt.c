@@ -5,7 +5,7 @@
  * Prints lower case letters except q and e
  * Return:  void
  */
-void main(void)
+int main(void)
 {
 	char c = 'a';
 
@@ -19,4 +19,5 @@ void main(void)
 		putchar(c);
 	}
 	putchar('\n');
+	return (0);
 }
