@@ -15,11 +15,10 @@ int main(void)
 		{
 			putchar((d1 % 10) + '0');
 			putchar((d2 % 10) + '0');
-			if (d1 != 8 && d2 != 9)
-			{
-				putchar(44);
-				putchar(32);
-			}
+			if (d1 == 8 && d2 == 9)
+				continue;
+			putchar(44);
+			putchar(32);
 		}
 	}
 	putchar('\n');
