@@ -21,4 +21,5 @@ int main(void)
 		he++;
 	}
 	putchar('\n');
+	return (0);
 }
