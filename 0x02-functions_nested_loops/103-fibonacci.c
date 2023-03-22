@@ -21,4 +21,5 @@ int main(void)
 		fib1 = fisum;
 	}
 	printf("%lu\n", sum);
+	return (0);
 }
