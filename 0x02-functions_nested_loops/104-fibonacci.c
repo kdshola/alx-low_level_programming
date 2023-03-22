@@ -27,7 +27,7 @@ int main(void)
 	{
 		half = fib1hal1 + fib2hal1;
 		half2 = fib1hal2 + fib2hal2;
-		if (fib1hal2 + fib2hal2 > 999999999)
+		if (fib1hal2 + fib2hal2 > 10000000000)
 		{
 			half += 1;
 			half2 %= 10000000000;
