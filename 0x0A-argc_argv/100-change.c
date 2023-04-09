@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 	coins = atoi(argv[1]);
-	while (coins)
+	while (coins > 0)
 	{
 		if (coins >= 25)
 			coins -= 25;
