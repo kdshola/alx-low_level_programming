@@ -27,7 +27,7 @@ char *str_concat(char *s1, char *s2)
 	}
 	totlen = l1 + l2 + 1;
 	catstr = (char *)malloc(sizeof(char) * totlen);
-	if (totlen == NULL)
+	if (catstr == NULL)
 		return (NULL);
 	for (a = 0; a < l1; a++)
 		catstr[a] = s1[a];
@@ -37,5 +37,5 @@ char *str_concat(char *s1, char *s2)
 		a++;
 	}
 	catstr[a] = '\0';
-	return (catsrt);
+	return (catstr);
 }
