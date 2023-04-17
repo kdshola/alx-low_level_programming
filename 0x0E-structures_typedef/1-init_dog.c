@@ -1,4 +1,4 @@
-#include "dog.g"
+#include "dog.h"
 
 /**
  * init_dog - initializes struct type dog
