@@ -13,10 +13,9 @@ void opcode_print(char *mainptr, int bte)
 
 	for (j = 0; j < bte; j++)
 	{
+		printf("%.2hhx", mainptr[j]);
 		if (j < bte - 1)
-			printf("%.2hhx ", mainptr[j]);
-		else
-			printf("%.2hhx", mainptr[j]);
+			printf(" ");
 	}
 	printf("\n");
 }
@@ -31,19 +30,19 @@ void opcode_print(char *mainptr, int bte)
 
 int main(int argc, char *argv[])
 {
-	int bte;
+	int b;
 
 	if (argc != 2)
 	{
 		printf("Erroe\n");
 		exit(1);
 	}
-	bte = atoi(argv[1]);
+	b = atoi(argv[1]);
 	if (bte < 0)
 	{
 		printf("Error\n");
 		exit(2);
 	}
-	opcode_print((char *)main, bte);
+	opcode_print((char *)&main, b);
 	return (0);
 }
