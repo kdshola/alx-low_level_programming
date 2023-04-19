@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 		exit(98);
 	}
 
-	if (strcmp(argv[2], "+" ) && strcmp(argv[2], "-")
+	if (strcmp(argv[2], "+") && strcmp(argv[2], "-")
 			&& strcmp(argv[2], "*")
 			&& strcmp(argv[2], "/")
 			&& strcmp(argv[2], "%"))
