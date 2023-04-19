@@ -14,7 +14,7 @@ void opcode_print(char *mainptr, int bte)
 	for (j = 0; j < bte; j++)
 	{
 		printf("%.2hhx", mainptr[j]);
-		if (j < bte - 1)
+		if (j < (bte - 1))
 			printf(" ");
 	}
 	printf("\n");
