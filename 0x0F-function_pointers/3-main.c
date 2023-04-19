@@ -10,7 +10,6 @@
 int main(int argc, char **argv)
 {
 	int a, b, c;
-	char op[] = "+-*/%";
 
 	if (argc != 4)
 	{
@@ -18,10 +17,10 @@ int main(int argc, char **argv)
 		exit(98);
 	}
 
-	if (strncmp(argv[2], op, 1) && strncmp(argv[2], (op + 1), 1)
-			&& strncmp(argv[2], (op + 2), 1)
-			&& strncmp(argv[2], (op + 3), 1)
-			&& strncmp(argv[2], (op + 3), 1))
+	if (strcmp(argv[2], "+" ) && strcmp(argv[2], "-")
+			&& strcmp(argv[2], "*")
+			&& strcmp(argv[2], "/")
+			&& strcmp(argv[2], "%"))
 	{
 		printf("Error\n");
 		exit(99);
