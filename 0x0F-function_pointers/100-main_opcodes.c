@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		printf("Erroe\n");
+		printf("Error\n");
 		exit(1);
 	}
 	b = atoi(argv[1]);
@@ -43,6 +43,6 @@ int main(int argc, char *argv[])
 		printf("Error\n");
 		exit(2);
 	}
-	opcode_print((char *)&main, b);
+	opcode_print((char *)main, b);
 	return (0);
 }
