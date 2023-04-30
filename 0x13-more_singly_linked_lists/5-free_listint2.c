@@ -2,9 +2,9 @@
 
 /**
  * free_listint2 - frees a linked list of type listint_t
- *   * @head: adress of first node in list
- *    * Return: nothing
- *     */
+ * @head: adress of first node in list
+ * Return: nothing
+ */
 void free_listint2(listint_t **head)
 {
 	listint_t *fre = *head;
@@ -15,4 +15,5 @@ void free_listint2(listint_t **head)
 		free(*head);
 		*head = fre;
 	}
+	*head = NULL;
 }
