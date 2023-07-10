@@ -1,6 +1,32 @@
 #include "main.h"
 
 /**
+ * close_file - closes files
+ * @file_1: fd of first file
+ * @file_2: fd of file 2
+ * @flag:function flag
+ * Return: void
+ */
+void close_file(int file_1, int file_2, int flag)
+{
+	int status = 0;
+
+	status = close(file_1);
+	if (status == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_1);
+		if (flag == 0)
+			exit(100);
+	}
+	status = close(file_2);
+	if (status == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_2);
+		if (flag == 0)
+			exit(100);
+	}
+}
+/**
  * read_write_error - checks for read and write error
  * @file_1: fd to file to copy from
  * @file_2: fd to file to copy to
@@ -29,7 +55,7 @@ void read_write_error(int file_1, int file_2, char **argv)
  */
 int main(int argc, char **argv)
 {
-	int file_1, file_2, status = 0;
+	int file_1, file_2, flag;
 	ssize_t letters_write, letters_read = 1024;
 	char buffer[1024];
 	char error_message[] = "Usage: cp file_from file_to";
@@ -43,24 +69,21 @@ int main(int argc, char **argv)
 	read_write_error(file_1, file_2, argv);
 	while (letters_read == 1024)
 	{
+		flag = 1;
 		letters_read = read(file_1, buffer, 1024);
 		if (letters_read == -1)
+		{
+			close_file(file_1, file_2, flag);
 			read_write_error(-1, 0, argv);
+		}
 		letters_write = write(file_2, buffer, letters_read);
 		if (letters_write == -1)
+		{
+			close_file(file_1, file_2, flag);
 			read_write_error(0, -1, argv);
+		}
 	}
-	status = close(file_1);
-	if (status == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_1);
-		exit(100);
-	}
-	status = close(file_2);
-	if (status == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_2);
-		exit(100);
-	}
+	flag = 0;
+	close_file(file_1, file_2, flag);
 	return (0);
 }
