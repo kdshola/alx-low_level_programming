@@ -16,16 +16,17 @@ int append_text_to_file(const char *filename, char *text_content)
 	if (fd < 0)
 		return (-1);
 	if (text_content)
-        {
-                for (letter_count = 0; text_content[letter_count]; letter_count++)
+	{
+		for (letter_count = 0; text_content[letter_count]; letter_count++)
 			;
-                letter_write = write(fd, text_content, letter_count);
-                if (letter_write == -1)
-                {
-                        close(fd);
-                        return (-1);
-                }
-        }
+		letter_write = write(fd, text_content, letter_count);
+		if (letter_write == -1)
+		{
+			close(fd);
+			return (-1);
+		}
+	}
 
 	close(fd);
 	return (1);
+}
