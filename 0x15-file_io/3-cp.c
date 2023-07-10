@@ -1,48 +1,83 @@
 #include "main.h"
 
 /**
+ * check_usage - checks for proper program usage
+ * @argc: argument count
+ * Return void
+ */
+void check_usage(int argc)
+{
+	char error_message[] = "Usage: cp file_from file_to\n";
+
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "%s\n", error_message);
+		exit(97);
+	}
+}
+
+/**
  * close_file - closes files
  * @file_1: fd of first file
  * @file_2: fd of file 2
- * @flag:function flag
  * Return: void
  */
-void close_file(int file_1, int file_2, int flag)
+void close_file(int file_1, int file_2)
 {
-	int status = 0;
+	int status_1, status_2;
 
-	status = close(file_1);
-	if (status == -1)
+	status_1 = close(file_1);
+	status_2 = close(file_2);
+	if (status_1 == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_1);
-		if (flag == 0)
-			exit(100);
+		exit(100);
 	}
-	status = close(file_2);
-	if (status == -1)
+	if (status_2 == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_2);
-		if (flag == 0)
-			exit(100);
+		exit(100);
 	}
 }
+
 /**
- * read_write_error - checks for read and write error
+ * read_error - checks for read and write error
+ * @status: file status
+ * @file_1: fd to file to copy from
+ * @file_2: fd to file to copy to
+ * @argv: argument vectors
+ * Return: Nothing
+ */
+void read_error(int status, int file_1, int file_2, char **argv)
+{
+	if (status == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		if (file_1 != -1)
+			close(file_1);
+		if (file_2 != -1)
+			close(file_2);
+		exit(98);
+	}
+}
+
+/**
+ * write_error - checks for read and write error
+ * @status: file status
  * @file_1: fd to file to copy from
  * @file_2: fd to file to copy to
  * @argv: argument vectors
  * Return: Mothing
  */
-void read_write_error(int file_1, int file_2, char **argv)
+void write_error(int status, int file_1, int file_2, char **argv)
 {
-	if (file_1 == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		exit(98);
-	}
-	if (file_2 == -1)
+	if (status == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		if (file_1 != -1)
+			close(file_1);
+		if (file_2 != -1)
+			close(file_2);
 		exit(99);
 	}
 }
@@ -55,35 +90,24 @@ void read_write_error(int file_1, int file_2, char **argv)
  */
 int main(int argc, char **argv)
 {
-	int file_1, file_2, flag;
-	ssize_t letters_write, letters_read = 1024;
+	int file_1, file_2;
+	ssize_t letters_wrote, letters_read = 1024;
 	char buffer[1024];
-	char error_message[] = "Usage: cp file_from file_to";
+	mode_t permissions;
 
-	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "%s\n", error_message);
-	}
+	check_usage(argc);
+	permissions = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 	file_1 = open(argv[1], O_RDONLY);
-	file_2 = open(argv[2], O_CREAT | O_RDONLY | O_APPEND | O_TRUNC, 0664);
-	read_write_error(file_1, file_2, argv);
+	read_error(file_1, file_1, -1, argv);
+	file_2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, permissions);
+	write_error(file_2, file_1, file_2, argv);
 	while (letters_read == 1024)
 	{
-		flag = 1;
 		letters_read = read(file_1, buffer, 1024);
-		if (letters_read == -1)
-		{
-			close_file(file_1, file_2, flag);
-			read_write_error(-1, 0, argv);
-		}
-		letters_write = write(file_2, buffer, letters_read);
-		if (letters_write == -1)
-		{
-			close_file(file_1, file_2, flag);
-			read_write_error(0, -1, argv);
-		}
+		read_error(letters_read, file_1, file_2, argv);
+		letters_wrote = write(file_2, buffer, letters_read);
+		write_error(letters_wrote, file_1, file_2, argv);
 	}
-	flag = 0;
-	close_file(file_1, file_2, flag);
+	close_file(file_1, file_2);
 	return (0);
 }
